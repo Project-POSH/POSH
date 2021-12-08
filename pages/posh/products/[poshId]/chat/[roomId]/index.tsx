@@ -113,7 +113,7 @@ export default function Chat() {
       await addDoc(collection(getFirestore(), `chatDB`), {
         roomId: `${router.query.poshId}${router.query.roomId}`,
         productId: `${router.query.poshId}`,
-        name: name,
+        writer: name,
         seller: seller,
         text: message,
         profilePicUrl: picture,
@@ -123,18 +123,18 @@ export default function Chat() {
       await setDoc(
         doc(
           collection(getFirestore(), `chatRoomDB`),
-          `${router.query.poshId}${seller}${name}`
+          `${router.query.poshId}${seller}${router.query.roomId}`
         ),
         {
           roomId: `${router.query.poshId}${router.query.roomId}`,
           productId: `${router.query.poshId}`,
-          name: name,
+          writer: name,
           seller: seller,
           text: message,
           profilePicUrl: picture,
           timestamp: serverTimestamp(),
           id: new Date().toString().slice(0, 25),
-          participants: [`${seller}`, `${name}`],
+          participants: [`${seller}`, `${router.query.roomId}`],
         }
       );
     } catch (error) {
@@ -166,7 +166,7 @@ export default function Chat() {
 
   useEffect(() => {
     loadMessages();
-  }, [name]);
+  }, []);
   console.log("렌더", messages);
 
   useEffect(() => {
@@ -180,7 +180,7 @@ export default function Chat() {
           <GetMessageWrapper key={el.timestamp}>
             <ProfileImg src={el.profilePicUrl} />
             <div>
-              <Name>{el.name}</Name>
+              <Name>{el.writer}</Name>
               <GetMessageBox>{el.text}</GetMessageBox>
               <MessageDate>{el.id}</MessageDate>
             </div>

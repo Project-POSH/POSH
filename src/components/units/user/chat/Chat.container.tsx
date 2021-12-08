@@ -77,7 +77,7 @@ export default function Chat() {
     const recentMessagesQuery = query(
       collection(getFirestore(), `chatRoomDB`),
       where("participants", "array-contains", `${name}`),
-      orderBy("timestamp", "asc"),
+      orderBy("timestamp", "desc"),
       limit(100)
     );
 
@@ -97,7 +97,6 @@ export default function Chat() {
 
   function onClickToChatRoom(event: any) {
     router.push(`/posh/products/${event.currentTarget.id}`);
-    console.log("확인", event.currentTarget.name);
   }
 
   useEffect(() => {
@@ -115,12 +114,12 @@ export default function Chat() {
           <MessageWrapper
             key={el.id}
             onClick={onClickToChatRoom}
-            id={`${el.productId}/chat/${el.name}`}
+            id={`${el.productId}/chat/${el.participants[1]}`}
           >
             <ProfileImg src={el.profilePicUrl} />
             <div>
               <NameAndTime>
-                <Name>{el.name}</Name>
+                <Name>{el.writer}</Name>
                 <LastTime>{el.id.slice(4, 15)}</LastTime>
               </NameAndTime>
               <Contents>{el.text}</Contents>

@@ -17,7 +17,7 @@ export async function getAccessToken(
 ) {
   try {
     const graphQLClient = new GraphQLClient(
-      "https://backend03-team.codebootcamp.co.kr/team04prod",
+      "https://backend03-team.codebootcamp.co.kr/team04",
       {
         credentials: "include",
       }
