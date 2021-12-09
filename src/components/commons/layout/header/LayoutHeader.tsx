@@ -61,7 +61,7 @@ export default function LayoutHeader() {
 
   return (
     <Wrapper>
-      {/* <Category isOpen={isOpen}>
+      <Category isOpen={isOpen}>
         <CategoryList isOpen={isOpen}>
           <CategoryName onClick={onClickCategory} id="top">
             Top
@@ -79,8 +79,8 @@ export default function LayoutHeader() {
             Acc
           </CategoryName>
         </CategoryList>
-      </Category> */}
-      {/* <CategoryBtn onClick={onClickOpen} isOpen={isOpen}></CategoryBtn> */}
+      </Category>
+      <CategoryBtn onClick={onClickOpen} isOpen={isOpen}></CategoryBtn>
       <HeaderLogo2 onClick={onClickMove} id="/posh/home">
         POSH
       </HeaderLogo2>
