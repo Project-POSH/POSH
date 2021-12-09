@@ -28,6 +28,8 @@ const FETCHUSERLOGGEDIN = gql`
     }
   }
 `;
+
+const Box = styled.div``;
 const ChatInputWrapper = styled.div`
   display: flex;
   position: fixed;
@@ -56,7 +58,7 @@ const GetMessageWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   width: 358px;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 `;
 const ProfileImg = styled.img`
   width: 50px;
@@ -80,10 +82,37 @@ const Name = styled.div`
   font-weight: 500;
 `;
 const ChatWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 10px;
   margin-bottom: 50px;
   overflow: auto;
   height: 730px;
+`;
+const ProductWrapper = styled.div`
+  width: 390px;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  background-color: #b69acb;
+  /* border-bottom: 1px solid lightgray; */
+`;
+const ProductImg = styled.img`
+  width: 90px;
+  height: 90px;
+`;
+const ProductInfo = styled.div`
+  padding: 0 15px;
+`;
+const ProductName = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+`;
+const ProductPrice = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+  padding-top: 10px;
 `;
 
 const firebaseAppConfig = getFirebaseConfig();
@@ -107,11 +136,15 @@ export default function Chat() {
   const name = data?.fetchUserLoggedIn.name;
   const picture = data?.fetchUserLoggedIn.picture;
   const seller = item?.fetchUseditem.seller.name;
+  const productImg = item?.fetchUseditem.images?.[0];
+  const productName = item?.fetchUseditem.name;
+  const productPrice = item?.fetchUseditem.price;
+  const roomId = `${router.query.poshId}${router.query.roomId}`;
 
   async function saveMessage() {
     try {
       await addDoc(collection(getFirestore(), `chatDB`), {
-        roomId: `${router.query.poshId}${router.query.roomId}`,
+        roomId: roomId,
         productId: `${router.query.poshId}`,
         writer: name,
         seller: seller,
@@ -120,23 +153,17 @@ export default function Chat() {
         timestamp: serverTimestamp(),
         id: new Date().toString().slice(0, 25),
       });
-      await setDoc(
-        doc(
-          collection(getFirestore(), `chatRoomDB`),
-          `${router.query.poshId}${seller}${router.query.roomId}`
-        ),
-        {
-          roomId: `${router.query.poshId}${router.query.roomId}`,
-          productId: `${router.query.poshId}`,
-          writer: name,
-          seller: seller,
-          text: message,
-          profilePicUrl: picture,
-          timestamp: serverTimestamp(),
-          id: new Date().toString().slice(0, 25),
-          participants: [`${seller}`, `${router.query.roomId}`],
-        }
-      );
+      await setDoc(doc(collection(getFirestore(), `chatRoomDB`), roomId), {
+        roomId: roomId,
+        productId: `${router.query.poshId}`,
+        writer: name,
+        seller: seller,
+        text: message,
+        profilePicUrl: picture,
+        timestamp: serverTimestamp(),
+        id: new Date().toString().slice(0, 25),
+        participants: [`${seller}`, `${router.query.roomId}`],
+      });
     } catch (error) {
       console.error("Error writing new message to Firebase Database", error);
     }
@@ -145,7 +172,7 @@ export default function Chat() {
   function loadMessages() {
     const recentMessagesQuery = query(
       collection(getFirestore(), `chatDB`),
-      where("roomId", "==", `${router.query.poshId}${router.query.roomId}`),
+      where("roomId", "==", roomId),
       orderBy("timestamp", "asc"),
       limit(100)
     );
@@ -164,9 +191,13 @@ export default function Chat() {
     }
   }
 
+  function onClickToProduct() {
+    router.push(`/posh/products/${router.query.poshId}`);
+  }
+
   useEffect(() => {
     loadMessages();
-  }, []);
+  }, [roomId]);
   console.log("렌더", messages);
 
   useEffect(() => {
@@ -174,7 +205,14 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <>
+    <Box>
+      <ProductWrapper onClick={onClickToProduct}>
+        <ProductImg src={`https://storage.googleapis.com/${productImg}`} />
+        <ProductInfo>
+          <ProductName>{productName}</ProductName>
+          <ProductPrice>₩{productPrice}</ProductPrice>
+        </ProductInfo>
+      </ProductWrapper>
       <ChatWrapper ref={msgRef}>
         {messages.map((el) => (
           <GetMessageWrapper key={el.timestamp}>
@@ -194,6 +232,6 @@ export default function Chat() {
         />
         <CommentsBnt onClick={saveMessage}>보내기</CommentsBnt>
       </ChatInputWrapper>
-    </>
+    </Box>
   );
 }

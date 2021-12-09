@@ -99,7 +99,7 @@ export default function LayoutHeader() {
           <IconBox onClick={onClickMove} id="/posh/products/write">
             <WriteBtn />
           </IconBox>
-          <IconBox onClick={onClickMove} id="/posh/user/chat">
+          <IconBox onClick={onClickMove} id="/posh/user/chatList">
             <ChatBtn />
           </IconBox>
           {data?.fetchUserLoggedIn.picture ? (
