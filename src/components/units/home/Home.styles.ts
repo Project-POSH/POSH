@@ -16,7 +16,7 @@ export const Products = styled.div`
   flex-wrap: wrap;
   margin-bottom: 70px;
   @media screen and (min-width: 600px) {
-    width: 900px;
+    width: 1100px;
   }
 `;
 export const ProductItem = styled.div`
@@ -27,9 +27,9 @@ export const ProductItem = styled.div`
   margin: 1px 1px;
   cursor: pointer;
   @media screen and (min-width: 600px) {
-    width: 221px;
-    height: 221px;
-    margin: 2px 2px;
+    width: 356px;
+    height: 420px;
+    margin: 5px 5px;
     position: relative;
     object-fit: cover;
     overflow: hidden;
@@ -124,3 +124,13 @@ export const ProductImg = styled.img`
   width: 100%;
   height: 100%;
 `;
+
+export const SelectWrapper = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 1090px;
+  @media screen and (max-width:600px){
+    display: none;
+  }
+`
