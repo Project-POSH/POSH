@@ -109,7 +109,7 @@ export default function ProductDetail() {
 
   function onClickToChat() {
     router.push(
-      `/posh/products/${router.query.poshId}/chat/${userInfo?.fetchUserLoggedIn.name}`
+      `/posh/products/${router.query.poshId}/chat/${userInfo?.fetchUserLoggedIn._id}`
     );
   }
 
