@@ -147,7 +147,7 @@ export const Profile = styled.img`
   border-radius: 50%;
 `;
 // 카테고리 토글버튼 /////////////////////////////////////////////
-export const CategoryBtn = styled(MenuIcon)<{ isOpen: boolean }>`
+export const CategoryBtn = styled(MenuIcon) <{ isOpen: boolean }>`
   font-size: 35px;
   color: ${(props) => (props.isOpen ? "#8915a6" : "#fff")};
   position: absolute;
@@ -187,4 +187,42 @@ export const CategoryName = styled.div`
   font-style: italic;
   color: #8915a6;
   font-weight: 500;
+`;
+
+export const MenuWrapper = styled.div`
+  width: 600px;
+  margin-top: 50px;
+  display: flex;
+  justify-content: space-between;
+  @media screen and (max-width: 600px){
+    display: none;
+  }
+`
+export const Menu = styled.span`
+  display: block;
+  position: relative;
+  font-family: "NotoSansitalic";
+  font-size: 13px;
+  color: #525252;
+  padding: 0px 0px;
+  :hover {
+    color: #8915a6;
+    cursor: pointer;
+    :after {
+      width: 100%;
+      left: 0;
+      transition: width .5s ease, background-color .5s ease;
+    }
+  }
+  :after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 5;
+    z-index: 1;
+    width: 0;
+    height: 1px;
+    background: #8915a6;
+    left: 50%;
+  }
 `;

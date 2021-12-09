@@ -21,6 +21,8 @@ import {
   CategoryList,
   CategoryName,
   SearchBar,
+  MenuWrapper,
+  Menu,
 } from "./LayoutHeader.styles";
 import { GlobalContext } from "../../../../../pages/_app";
 import { useContext, useState } from "react";
@@ -54,9 +56,12 @@ export default function LayoutHeader() {
   }
 
   const { data } = useQuery(FETCH_USER_LOGGED_IN);
+
+
+
   return (
     <Wrapper>
-      <Category isOpen={isOpen}>
+      {/* <Category isOpen={isOpen}>
         <CategoryList isOpen={isOpen}>
           <CategoryName onClick={onClickCategory} id="top">
             Top
@@ -74,12 +79,12 @@ export default function LayoutHeader() {
             Acc
           </CategoryName>
         </CategoryList>
-      </Category>
-      <CategoryBtn onClick={onClickOpen} isOpen={isOpen}></CategoryBtn>
+      </Category> */}
+      {/* <CategoryBtn onClick={onClickOpen} isOpen={isOpen}></CategoryBtn> */}
       <HeaderLogo2 onClick={onClickMove} id="/posh/home">
         POSH
       </HeaderLogo2>
-      <HeaderWrpper>
+      {/* <HeaderWrpper>
         <HeaderLogo onClick={onClickMove} id="/posh/home">
           POSH
         </HeaderLogo>
@@ -89,10 +94,6 @@ export default function LayoutHeader() {
             <Search onChange={onChangeSearch} />
             <SearchBtn onClick={onClickSearch}></SearchBtn>
           </SearchBar>
-          {/* <SearchBar01
-            onChangeSearch={onChangeSearch}
-            onClickSearch={onClickSearch}
-          /> */}
           <IconBox onClick={onClickMove} id="/posh/home">
             <HomeBtn />
           </IconBox>
@@ -115,8 +116,22 @@ export default function LayoutHeader() {
               <MyPageBtn />
             </IconBox>
           )}
-        </IconWrapper>
-      </HeaderWrpper>
+        </IconWrapper> */}
+      {/* </HeaderWrpper> */}
+      <MenuWrapper>
+        <Menu>ABOUT</Menu>
+        <Menu>BOARD</Menu>
+        <Menu>SEARCH</Menu>
+        <Menu onClick={onClickMove} id="/posh/products/write">
+          SUBMIT
+        </Menu>
+        <Menu onClick={onClickMove} id="/posh/user/chatList">
+          CHAT
+        </Menu>
+        <Menu onClick={onClickMove} id="/posh/user/mypage">MY PAGE</Menu>
+        <Menu onClick={onClickMove} id="/posh/accounts/login">LOGIN</Menu>
+        <Menu onClick={onClickMove} id="/posh/accounts/signup">JOIN US</Menu>
+      </MenuWrapper>
     </Wrapper>
   );
 }

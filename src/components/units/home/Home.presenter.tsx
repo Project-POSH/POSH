@@ -8,9 +8,11 @@ import {
   CateDiv,
   ProductPrice,
   ProductImg,
+  SelectWrapper,
 } from "./Home.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 export default function HomeUI(props: any) {
   const router = useRouter();
@@ -20,12 +22,13 @@ export default function HomeUI(props: any) {
   };
 
   function onClickCategory(event: any) {
-    router.push(`/posh/${event.target.id}`);
+    router.push(`/posh/${event.target.value}`);
+    console.log(event.target.value);
   }
 
   return (
     <>
-      <CateWrapper>
+      {/* <CateWrapper>
         <CateDiv>
           <Category onClick={onClickCategory} id="top">
             Top
@@ -46,8 +49,40 @@ export default function HomeUI(props: any) {
           <Category onClick={onClickCategory} id="acc">
             Acc
           </Category>
-        </CateDiv>
-      </CateWrapper>
+        </CateDiv> */}
+      {/* </CateWrapper> */}
+      <SelectWrapper>
+        <select
+          style={{
+            width: "100px",
+            fontSize: "13px",
+            outline: "none",
+            color: "#444",
+            border: "none",
+          }}
+          onChange={onClickCategory}
+        >
+          <option>All ITMES</option>
+          <option>top</option>
+          <option>bottom</option>
+          <option>shoes</option>
+          <option>bag</option>
+          <option>acc</option>
+        </select>
+        <select
+          style={{
+            width: "100px",
+            fontSize: "13px",
+            outline: "none",
+            color: "#444",
+            border: "1px solid #ccc",
+          }}
+        >
+          <option>최신순</option>
+          <option>낮은가격</option>
+          <option>높은가격</option>
+        </select>
+      </SelectWrapper>
       <ContentsWrapper>
         {props.data && (
           <InfiniteScroll
