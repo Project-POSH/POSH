@@ -47,9 +47,9 @@ export default function ChatRoom() {
   const productName = item?.fetchUseditem.name;
   const productPrice = item?.fetchUseditem.price;
   const roomId = `${router.query.poshId}${router.query.roomId}`;
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement | any>(null);
 
-  async function saveMessage(event: any) {
+  async function saveMessage() {
     try {
       await addDoc(collection(getFirestore(), `chatDB`), {
         roomId: roomId,
@@ -107,15 +107,21 @@ export default function ChatRoom() {
     router.push(`/posh/products/${router.query.poshId}/seller`);
   }
 
+  function enterKey() {
+    if (window.event.keyCode == 13) {
+      saveMessage();
+    }
+  }
+
   useEffect(() => {
     loadMessages();
   }, [roomId, name]);
-  console.log("렌더", messages);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
 
+  console.log("렌더", messages);
   return (
     <ChatRoomUI
       onChangemessage={onChangemessage}
@@ -129,6 +135,7 @@ export default function ChatRoom() {
       inputRef={inputRef}
       myId={myId}
       onClickToProfile={onClickToProfile}
+      enterKey={enterKey}
     />
   );
 }

@@ -59,6 +59,7 @@ export default function ChatRoomUI(props: any) {
           placeholder="메세지를 입력하세요"
           onChange={props.onChangemessage}
           ref={props.inputRef}
+          onKeyUp={props.enterKey}
         />
         <CommentsBnt onClick={props.saveMessage}>보내기</CommentsBnt>
       </ChatInputWrapper>
