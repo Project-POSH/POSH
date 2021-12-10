@@ -16,6 +16,7 @@ export const Wrapper = styled.div`
     height: 100px;
     background-color: #8915a6;
   }
+
 `;
 export const HeaderWrpper = styled.div`
   width: 900px;

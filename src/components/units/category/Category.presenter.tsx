@@ -9,14 +9,23 @@ import {
   ProductImg,
   ProductImgWrapper,
   ProductPrice,
+  SelectWrapper,
+  CateSelect,
+  SortSelect,
 } from "./Category.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from "next/router";
 
 export default function CategoryUI(props: any) {
+  const router = useRouter()
+  function onClickCategory(event: any) {
+    router.push(`/posh/${event.target.value}`);
+    console.log(event.target.value);
+  }
   return (
     <Wrapper>
-      <CateWrapper>
+      {/* <CateWrapper>
         <CateDiv>
           <Category
             onClick={props.onClickCategory}
@@ -54,7 +63,22 @@ export default function CategoryUI(props: any) {
             Acc
           </Category>
         </CateDiv>
-      </CateWrapper>
+      </CateWrapper> */}
+      <SelectWrapper>
+        <CateSelect onChange={onClickCategory}>
+          <option value="home">All ITMES</option>
+          <option value="top">TOP</option>
+          <option value="bottom">BOTTOM</option>
+          <option value="shoes">SHOES</option>
+          <option value="bag">BAG</option>
+          <option value="acc">ACC</option>
+        </CateSelect>
+        {/* <SortSelect>
+          <option>최신순</option>
+          <option>낮은가격</option>
+          <option>높은가격</option>
+        </SortSelect> */}
+      </SelectWrapper>
       <ContentsWrapper>
         {props.data && (
           <InfiniteScroll

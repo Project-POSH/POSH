@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import { useRouter } from "next/router";
 import { FETCH_USER_LOGGED_IN } from "../../../units/products/detail/ProductDetail.queries";
 import {
@@ -33,13 +32,13 @@ import { useContext, useState } from "react";
 // import SearchBar01 from "../../searchBars/searchBar01";
 
 export default function LayoutHeader() {
-  const { setSearch }: any = useContext(GlobalContext);
+  const { setSearch, accessToken, setAccessToken }: any =
+    useContext(GlobalContext);
   const [mySearch, setMySearch] = useState("");
   const [openSearch, setOpenSearch] = useState(false);
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-
   const onChangeSearch = (e: any) => {
     setMySearch(e.target.value);
   };
@@ -48,6 +47,7 @@ export default function LayoutHeader() {
     if (window.event.keyCode === 13) {
       setSearch(mySearch);
       setOpenSearch((prev) => !prev);
+      router.push("/posh/home");
     }
   };
 
@@ -69,7 +69,10 @@ export default function LayoutHeader() {
     setIsOpen(false);
   }
 
-  const { data } = useQuery(FETCH_USER_LOGGED_IN);
+  const onClickLogout = () => {
+    localStorage.clear();
+    setAccessToken("");
+  };
 
   return (
     <Wrapper>
@@ -143,9 +146,15 @@ export default function LayoutHeader() {
         <Menu onClick={onClickMove} id="/posh/user/mypage">
           MY PAGE
         </Menu>
-        <Menu onClick={onClickMove} id="/posh/accounts/login">
-          LOGIN
-        </Menu>
+        {!accessToken ? (
+          <Menu onClick={onClickMove} id="/posh/accounts/login">
+            LOGIN
+          </Menu>
+        ) : (
+          <Menu onClick={onClickLogout} id="/posh/accounts/login">
+            LOGOUT
+          </Menu>
+        )}
         <Menu onClick={onClickMove} id="/posh/accounts/signup">
           JOIN US
         </Menu>

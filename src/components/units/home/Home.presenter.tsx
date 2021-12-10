@@ -9,10 +9,12 @@ import {
   ProductPrice,
   ProductImg,
   SelectWrapper,
+  CateSelect,
+  SortSelect,
 } from "./Home.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { sortBy } from "lodash";
 
 export default function HomeUI(props: any) {
   const router = useRouter();
@@ -25,6 +27,21 @@ export default function HomeUI(props: any) {
     router.push(`/posh/${event.target.value}`);
     console.log(event.target.value);
   }
+
+  //sort 정렬
+  // const items = props.data?.fetchUseditems.map(
+  //   (el: any) => el.price
+  // );
+  // if (Array.isArray(props.data?.fetchUseditems)) {
+  //   const tempOption = props.data?.fetchUseditems.map((item, index) => {
+  //     if (index !== 1) {
+  //       return item;
+  //     }
+  //   });
+  //   const b = tempOption.sort((a, b) => b.price - a.price);
+  //   console.log(b);
+  // }
+  // console.log(typeof props.data?.fetchUseditems[0]);
 
   return (
     <>
@@ -52,36 +69,19 @@ export default function HomeUI(props: any) {
         </CateDiv> */}
       {/* </CateWrapper> */}
       <SelectWrapper>
-        <select
-          style={{
-            width: "100px",
-            fontSize: "13px",
-            outline: "none",
-            color: "#444",
-            border: "none",
-          }}
-          onChange={onClickCategory}
-        >
-          <option>All ITMES</option>
-          <option>top</option>
-          <option>bottom</option>
-          <option>shoes</option>
-          <option>bag</option>
-          <option>acc</option>
-        </select>
-        <select
-          style={{
-            width: "100px",
-            fontSize: "13px",
-            outline: "none",
-            color: "#444",
-            border: "1px solid #ccc",
-          }}
-        >
+        <CateSelect onChange={onClickCategory}>
+          <option value="home">All ITMES</option>
+          <option value="top">TOP</option>
+          <option value="bottom">BOTTOM</option>
+          <option value="shoes">SHOES</option>
+          <option value="bag">BAG</option>
+          <option value="acc">ACC</option>
+        </CateSelect>
+        {/* <SortSelect>
           <option>최신순</option>
           <option>낮은가격</option>
           <option>높은가격</option>
-        </select>
+        </SortSelect> */}
       </SelectWrapper>
       <ContentsWrapper>
         {props.data && (

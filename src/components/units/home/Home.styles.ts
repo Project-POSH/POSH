@@ -134,3 +134,17 @@ export const SelectWrapper = styled.div`
     display: none;
   }
 `
+export const CateSelect = styled.select`
+  width: 100px;
+  font-size: 13px;
+  outline: none;
+  color: #444;
+  border: none;
+`
+export const SortSelect = styled.select`
+  width: 100px;
+  font-size: 13px;
+  outline: none;
+  color: #444;
+  border: 1px solid #ccc;
+`
