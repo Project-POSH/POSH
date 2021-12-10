@@ -8,7 +8,6 @@ import {
   addDoc,
   query,
   orderBy,
-  limit,
   onSnapshot,
   serverTimestamp,
   setDoc,
@@ -20,6 +19,7 @@ import {
   FETCH_USEDITEM,
   FETCH_USER_LOGGED_IN,
 } from "../detail/ProductDetail.queries";
+import { v4 as uuidv4 } from "uuid";
 import ChatRoomUI from "./chatRoom.presenter";
 
 const firebaseAppConfig = getFirebaseConfig();
@@ -27,17 +27,12 @@ initializeApp(firebaseAppConfig);
 
 export default function ChatRoom() {
   const router = useRouter();
-  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
 
   const { data }: any = useQuery(FETCH_USER_LOGGED_IN);
   const { data: item }: any = useQuery(FETCH_USEDITEM, {
     variables: { useditemId: router.query.poshId },
   });
-
-  const onChangemessage = (e: any) => {
-    setMessage(e.target.value);
-  };
 
   const name = data?.fetchUserLoggedIn.name;
   const myId = data?.fetchUserLoggedIn._id;
@@ -47,26 +42,27 @@ export default function ChatRoom() {
   const productName = item?.fetchUseditem.name;
   const productPrice = item?.fetchUseditem.price;
   const roomId = `${router.query.poshId}${router.query.roomId}`;
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement | any>(null);
 
-  async function saveMessage(event: any) {
+  async function saveMessage() {
     try {
       await addDoc(collection(getFirestore(), `chatDB`), {
         roomId: roomId,
         productId: router.query.poshId,
         writer: [name, myId],
         seller: seller,
-        text: message,
+        text: inputRef.current.value,
         profilePicUrl: picture,
         timestamp: serverTimestamp(),
-        id: new Date().toString().slice(0, 21),
+        id: new Date().toString().slice(0, 25),
+        key: uuidv4(),
       });
       await setDoc(doc(collection(getFirestore(), `chatRoomDB`), roomId), {
         roomId: roomId,
         productId: router.query.poshId,
         writer: [name, myId],
         seller: seller,
-        text: message,
+        text: inputRef.current.value,
         profilePicUrl: picture,
         timestamp: serverTimestamp(),
         id: new Date().toString().slice(0, 25),
@@ -82,8 +78,7 @@ export default function ChatRoom() {
     const recentMessagesQuery = query(
       collection(getFirestore(), `chatDB`),
       where("roomId", "==", roomId),
-      orderBy("timestamp", "asc"),
-      limit(100)
+      orderBy("timestamp", "asc")
     );
     onSnapshot(recentMessagesQuery, function (snapshot) {
       // @ts-ignore
@@ -103,18 +98,20 @@ export default function ChatRoom() {
     router.push(`/posh/products/${router.query.poshId}`);
   }
 
+  function onClickToProfile() {
+    router.push(`/posh/products/${router.query.poshId}/seller`);
+  }
+
   useEffect(() => {
     loadMessages();
   }, [roomId, name]);
-  console.log("렌더", messages);
 
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-
+  console.log("렌더");
   return (
     <ChatRoomUI
-      onChangemessage={onChangemessage}
       productImg={productImg}
       productName={productName}
       productPrice={productPrice}
@@ -124,6 +121,7 @@ export default function ChatRoom() {
       messages={messages}
       inputRef={inputRef}
       myId={myId}
+      onClickToProfile={onClickToProfile}
     />
   );
 }

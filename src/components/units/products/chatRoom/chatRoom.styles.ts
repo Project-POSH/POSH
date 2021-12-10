@@ -99,3 +99,6 @@ export const MyMessageWrapper = styled.div`
   align-items: flex-end;
   padding-top: 5px;
 `;
+export const NewDate = styled.div`
+  text-align: center;
+`;

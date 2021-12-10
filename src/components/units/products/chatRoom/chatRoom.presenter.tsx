@@ -16,6 +16,7 @@ import {
   ProductPrice,
   MessageInfo,
   MyMessageWrapper,
+  NewDate,
 } from "./chatRoom.styles";
 
 export default function ChatRoomUI(props: any) {
@@ -31,11 +32,16 @@ export default function ChatRoomUI(props: any) {
         </ProductInfo>
       </ProductWrapper>
       <ChatWrapper ref={props.msgRef}>
-        {props.messages.map((el: any) => (
-          <>
+        {props.messages.map((el: any, idx: number) => (
+          <div key={el.key}>
+            {props.messages[idx - 1]?.id.slice(0, 15) !==
+              el.id.slice(0, 15) && <NewDate>{el.id.slice(0, 15)}</NewDate>}
             {props.myId !== el.writer[1] ? (
-              <GetMessageWrapper key={el.timestamp}>
-                <ProfileImg src={el.profilePicUrl} />
+              <GetMessageWrapper>
+                <ProfileImg
+                  src={el.profilePicUrl}
+                  onClick={props.onClickToProfile}
+                />
                 <MessageInfo>
                   <Name>{el.writer[0]}</Name>
                   <GetMessageBox>{el.text}</GetMessageBox>
@@ -43,18 +49,17 @@ export default function ChatRoomUI(props: any) {
                 </MessageInfo>
               </GetMessageWrapper>
             ) : (
-              <MyMessageWrapper key={el.timestamp}>
+              <MyMessageWrapper>
                 <GetMessageBox>{el.text}</GetMessageBox>
-                <MessageDate>{el.id}</MessageDate>
+                <MessageDate>{el.id.slice(16, 21)}</MessageDate>
               </MyMessageWrapper>
             )}
-          </>
+          </div>
         ))}
       </ChatWrapper>
       <ChatInputWrapper>
         <CommentsInputWrite
           placeholder="메세지를 입력하세요"
-          onChange={props.onChangemessage}
           ref={props.inputRef}
         />
         <CommentsBnt onClick={props.saveMessage}>보내기</CommentsBnt>
