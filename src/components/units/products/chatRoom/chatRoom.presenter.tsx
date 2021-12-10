@@ -35,7 +35,10 @@ export default function ChatRoomUI(props: any) {
           <>
             {props.myId !== el.writer[1] ? (
               <GetMessageWrapper key={el.timestamp}>
-                <ProfileImg src={el.profilePicUrl} />
+                <ProfileImg
+                  src={el.profilePicUrl}
+                  onClick={props.onClickToProfile}
+                />
                 <MessageInfo>
                   <Name>{el.writer[0]}</Name>
                   <GetMessageBox>{el.text}</GetMessageBox>

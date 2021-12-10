@@ -103,6 +103,10 @@ export default function ChatRoom() {
     router.push(`/posh/products/${router.query.poshId}`);
   }
 
+  function onClickToProfile() {
+    router.push(`/posh/products/${router.query.poshId}/seller`);
+  }
+
   useEffect(() => {
     loadMessages();
   }, [roomId, name]);
@@ -124,6 +128,7 @@ export default function ChatRoom() {
       messages={messages}
       inputRef={inputRef}
       myId={myId}
+      onClickToProfile={onClickToProfile}
     />
   );
 }
