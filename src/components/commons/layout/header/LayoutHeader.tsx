@@ -23,6 +23,10 @@ import {
   SearchBar,
   MenuWrapper,
   Menu,
+  OpenSearchWrapper,
+  SearchInput,
+  SearchText,
+  SearchBox,
 } from "./LayoutHeader.styles";
 import { GlobalContext } from "../../../../../pages/_app";
 import { useContext, useState } from "react";
@@ -31,6 +35,7 @@ import { useContext, useState } from "react";
 export default function LayoutHeader() {
   const { setSearch }: any = useContext(GlobalContext);
   const [mySearch, setMySearch] = useState("");
+  const [openSearch, setOpenSearch] = useState(false);
 
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -38,8 +43,17 @@ export default function LayoutHeader() {
   const onChangeSearch = (e: any) => {
     setMySearch(e.target.value);
   };
+  // enter로 검색하기
   const onClickSearch = () => {
-    setSearch(mySearch);
+    if (window.event.keyCode === 13) {
+      setSearch(mySearch);
+      setOpenSearch((prev) => !prev);
+    }
+  };
+
+  const onClickOpenSearch = () => {
+    setOpenSearch((prev) => !prev);
+    console.log(openSearch);
   };
 
   function onClickMove(event: any) {
@@ -56,8 +70,6 @@ export default function LayoutHeader() {
   }
 
   const { data } = useQuery(FETCH_USER_LOGGED_IN);
-
-
 
   return (
     <Wrapper>
@@ -121,17 +133,35 @@ export default function LayoutHeader() {
       <MenuWrapper>
         <Menu>ABOUT</Menu>
         <Menu>BOARD</Menu>
-        <Menu>SEARCH</Menu>
+        <Menu onClick={onClickOpenSearch}>SEARCH</Menu>
         <Menu onClick={onClickMove} id="/posh/products/write">
           SUBMIT
         </Menu>
         <Menu onClick={onClickMove} id="/posh/user/chatList">
           CHAT
         </Menu>
-        <Menu onClick={onClickMove} id="/posh/user/mypage">MY PAGE</Menu>
-        <Menu onClick={onClickMove} id="/posh/accounts/login">LOGIN</Menu>
-        <Menu onClick={onClickMove} id="/posh/accounts/signup">JOIN US</Menu>
+        <Menu onClick={onClickMove} id="/posh/user/mypage">
+          MY PAGE
+        </Menu>
+        <Menu onClick={onClickMove} id="/posh/accounts/login">
+          LOGIN
+        </Menu>
+        <Menu onClick={onClickMove} id="/posh/accounts/signup">
+          JOIN US
+        </Menu>
       </MenuWrapper>
+      {openSearch && (
+        <OpenSearchWrapper onClick={onClickOpenSearch}>
+          <SearchBox>
+            <SearchInput
+              autoFocus
+              onChange={onChangeSearch}
+              onKeyUp={onClickSearch}
+            ></SearchInput>
+            <SearchText>press enter to search</SearchText>
+          </SearchBox>
+        </OpenSearchWrapper>
+      )}
     </Wrapper>
   );
 }

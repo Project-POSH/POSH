@@ -56,6 +56,7 @@ export const SearchWrapper = styled.div`
     display: none;
   }
 `;
+
 export const SearchBar = styled.div`
   border: 1px solid #8915a6;
   border-radius: 30px;
@@ -226,3 +227,36 @@ export const Menu = styled.span`
     left: 50%;
   }
 `;
+
+export const OpenSearchWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  background-color:#b69acb;
+  background-color:rgba( 255, 255, 255, 0.8 );
+  z-index: 2;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+export const SearchInput = styled.input`
+  border: none;
+  outline: none;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #8915a6;
+  width: 500px;
+  background-color: transparent;
+  font-size: 30px;
+  color: #8915a6;
+`
+export const SearchText = styled.div`
+  font-size: 18px;  
+  color: #8915a6;
+  font-family: "NotoSansitalic";
+`
+export const SearchBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 100px;
+`
