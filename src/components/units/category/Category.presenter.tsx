@@ -1,8 +1,5 @@
 import {
   Wrapper,
-  CateWrapper,
-  Category,
-  CateDiv,
   ContentsWrapper,
   Products,
   ProductItem,
@@ -11,59 +8,19 @@ import {
   ProductPrice,
   SelectWrapper,
   CateSelect,
-  SortSelect,
 } from "./Category.styles";
 import InfiniteScroll from "react-infinite-scroller";
 import { v4 as uuidv4 } from "uuid";
 import { useRouter } from "next/router";
 
 export default function CategoryUI(props: any) {
-  const router = useRouter()
+  const router = useRouter();
   function onClickCategory(event: any) {
     router.push(`/posh/${event.target.value}`);
     console.log(event.target.value);
   }
   return (
     <Wrapper>
-      {/* <CateWrapper>
-        <CateDiv>
-          <Category
-            onClick={props.onClickCategory}
-            id="top"
-            router={props.router}
-          >
-            Top
-          </Category>
-          <Category
-            onClick={props.onClickCategory}
-            id="bottom"
-            router={props.router}
-          >
-            Bottom
-          </Category>
-          <Category
-            onClick={props.onClickCategory}
-            id="shoes"
-            router={props.router}
-          >
-            Shoes
-          </Category>
-          <Category
-            onClick={props.onClickCategory}
-            id="bag"
-            router={props.router}
-          >
-            Bag
-          </Category>
-          <Category
-            onClick={props.onClickCategory}
-            id="acc"
-            router={props.router}
-          >
-            Acc
-          </Category>
-        </CateDiv>
-      </CateWrapper> */}
       <SelectWrapper>
         <CateSelect onChange={onClickCategory}>
           <option value="home">All ITMES</option>
@@ -73,11 +30,6 @@ export default function CategoryUI(props: any) {
           <option value="bag">BAG</option>
           <option value="acc">ACC</option>
         </CateSelect>
-        {/* <SortSelect>
-          <option>최신순</option>
-          <option>낮은가격</option>
-          <option>높은가격</option>
-        </SortSelect> */}
       </SelectWrapper>
       <ContentsWrapper>
         {props.data && (

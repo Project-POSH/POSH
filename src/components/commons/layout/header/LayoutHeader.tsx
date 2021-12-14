@@ -1,25 +1,11 @@
 import { useRouter } from "next/router";
-import { FETCH_USER_LOGGED_IN } from "../../../units/products/detail/ProductDetail.queries";
 import {
   Wrapper,
-  HeaderWrpper,
-  HeaderLogo,
   HeaderLogo2,
-  SearchWrapper,
-  Search,
-  SearchBtn,
-  HomeBtn,
-  WriteBtn,
-  ChatBtn,
-  MyPageBtn,
-  IconBox,
-  IconWrapper,
-  Profile,
   CategoryBtn,
   Category,
   CategoryList,
   CategoryName,
-  SearchBar,
   MenuWrapper,
   Menu,
   OpenSearchWrapper,
@@ -44,7 +30,7 @@ export default function LayoutHeader() {
   };
   // enter로 검색하기
   const onClickSearch = () => {
-    //@ts-ignore
+    // @ts-ignore
     if (window.event.keyCode === 13) {
       setSearch(mySearch);
       setOpenSearch((prev) => !prev);
@@ -101,40 +87,6 @@ export default function LayoutHeader() {
       <HeaderLogo2 onClick={onClickMove} id="/posh/home">
         POSH
       </HeaderLogo2>
-      {/* <HeaderWrpper>
-        <HeaderLogo onClick={onClickMove} id="/posh/home">
-          POSH
-        </HeaderLogo>
-        <SearchWrapper></SearchWrapper>
-        <IconWrapper>
-          <SearchBar>
-            <Search onChange={onChangeSearch} />
-            <SearchBtn onClick={onClickSearch}></SearchBtn>
-          </SearchBar>
-          <IconBox onClick={onClickMove} id="/posh/home">
-            <HomeBtn />
-          </IconBox>
-          <IconBox onClick={onClickMove} id="/posh/products/write">
-            <WriteBtn />
-          </IconBox>
-          <IconBox onClick={onClickMove} id="/posh/user/chatList">
-            <ChatBtn />
-          </IconBox>
-          {data?.fetchUserLoggedIn.picture ? (
-            <IconBox style={{ marginLeft: "10px" }}>
-              <Profile
-                src={data?.fetchUserLoggedIn.picture}
-                onClick={onClickMove}
-                id="/posh/user/mypage"
-              />
-            </IconBox>
-          ) : (
-            <IconBox onClick={onClickMove} id="/posh/user/mypage">
-              <MyPageBtn />
-            </IconBox>
-          )}
-        </IconWrapper> */}
-      {/* </HeaderWrpper> */}
       <MenuWrapper>
         <Menu>ABOUT</Menu>
         <Menu>BOARD</Menu>
