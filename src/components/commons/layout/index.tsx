@@ -1,6 +1,7 @@
 import LayoutFooterM from "./footer_mobile/LayoutFooterMobile";
 import LayoutHeader from "./header/LayoutHeader";
 import LayoutFooterPC from "./footer_pc/LayoutFooterPC";
+import SideBar from "./sideBar/SideBar";
 import styled from "@emotion/styled";
 import { useRouter } from "next/router";
 
@@ -28,22 +29,6 @@ const Body = styled.div<{ pathname: string }>`
         : ""};
   }
 `;
-const Side = styled.div`
-  position: fixed;
-  font-size: 40px;
-  font-family: "NotoSansitalic";
-  width: 200px;
-  left: 0;
-  top: 40vh;
-  transform: rotate(270deg);
-  cursor: pointer;
-  :hover {
-    color: #8915a6;
-  }
-  @media screen and (max-width:600px){
-    display: none;
-  }
-`;
 
 const HiddenHeader = ["/posh/accounts/login", "/posh/accounts/signup", "/"];
 const HiddenFooter = [
@@ -66,13 +51,11 @@ export default function Layout(props: any) {
   const isHiddenHeader = HiddenHeader.includes(router.pathname);
   const isHiddenFooter = HiddenFooter.includes(router.pathname);
   const isHiddenFooterPC = HiddeonFooterPC.includes(router.pathname);
-  const onClickMoveHome = () => {
-    router.push("/posh/home");
-  };
+
   return (
     <Wrapper>
       {!isHiddenHeader && <LayoutHeader />}
-      <Side onClick={onClickMoveHome}>POSH</Side>
+      <SideBar />
       <Body pathname={router.pathname}>{props.children}</Body>
       {!isHiddenFooter && <LayoutFooterM />}
       {!isHiddenFooterPC && <LayoutFooterPC />}

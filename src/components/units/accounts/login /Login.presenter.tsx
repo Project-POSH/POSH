@@ -22,7 +22,7 @@ export default function LoginUI(props: any) {
         <AccountWrapper>
           <Account>
             <AccountInfo
-              placeholder="email ID"
+              placeholder="email ID : posh@gmail.com"
               type="text"
               onChange={props.onChangeEmail}
             />
@@ -30,7 +30,7 @@ export default function LoginUI(props: any) {
           </Account>
           <Account>
             <AccountInfo
-              placeholder="Password"
+              placeholder="Password : 1111"
               type="password"
               onChange={props.onChangePassword}
             />

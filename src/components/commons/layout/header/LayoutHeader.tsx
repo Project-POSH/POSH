@@ -44,9 +44,11 @@ export default function LayoutHeader() {
   };
   // enter로 검색하기
   const onClickSearch = () => {
+    //@ts-ignore
     if (window.event.keyCode === 13) {
       setSearch(mySearch);
       setOpenSearch((prev) => !prev);
+      if (router.pathname === "/posh/home") return;
       router.push("/posh/home");
     }
   };
