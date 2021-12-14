@@ -12,7 +12,7 @@ export default function ChatUI(props: any) {
   return (
     <>
       <ChatWrapper ref={props.msgRef}>
-        {props.messages.map((el) => (
+        {props.messages.map((el: any) => (
           <MessageWrapper
             key={el.id}
             onClick={props.onClickToChatRoom}
