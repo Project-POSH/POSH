@@ -41,7 +41,6 @@ export default function LayoutHeader() {
 
   const onClickOpenSearch = () => {
     setOpenSearch((prev) => !prev);
-    console.log(openSearch);
   };
 
   function onClickMove(event: any) {

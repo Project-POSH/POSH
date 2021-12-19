@@ -109,7 +109,7 @@ export default function ChatRoom() {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
-  console.log("렌더");
+
   return (
     <ChatRoomUI
       productImg={productImg}
