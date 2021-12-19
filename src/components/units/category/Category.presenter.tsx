@@ -17,7 +17,6 @@ export default function CategoryUI(props: any) {
   const router = useRouter();
   function onClickCategory(event: any) {
     router.push(`/posh/${event.target.value}`);
-    console.log(event.target.value);
   }
   return (
     <Wrapper>

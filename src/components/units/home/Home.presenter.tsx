@@ -20,7 +20,6 @@ export default function HomeUI(props: any) {
 
   function onClickCategory(event: any) {
     router.push(`/posh/${event.target.value}`);
-    console.log(event.target.value);
   }
 
   return (
